@@ -4,6 +4,7 @@ plugins {
 
 golang {
 	packagePath = 'github.com/tclift/google-cloud-tasks-pull-to-push'
+	buildMode = 'REPRODUCIBLE'
 }
 
 build {
