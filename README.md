@@ -74,8 +74,7 @@ Alternatively, [create a new service account](https://cloud.google.com/docs/auth
 
 ## Helm / Kubernetes
 
-There is a chart to help map CLI args to Helm values. See
-[github:tclift/google-cloud-tasks-pull-to-push/helm](https://github.com/tclift/google-cloud-tasks-pull-to-push/helm).
+There is a chart to help map CLI args to Helm values. See the `helm` directory.
 
 
 ## Building
