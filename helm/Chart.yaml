@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+name: google-cloud-tasks-pull-to-push
+description: Google Cloud Tasks Push queue for arbitrary URLs.
+version: 0.1.0
+home: https://github.com/tclift/google-cloud-tasks-pull-to-push
+sources:
+- https://github.com/tclift/google-cloud-tasks-pull-to-push
+appVersion: 0.1.0
