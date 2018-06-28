@@ -8,4 +8,8 @@ golang {
 
 build {
 	targetPlatform = [ findProperty('targetPlatform') ?: 'linux-amd64' ]
+	environment 'CGO_ENABLED', '0'
+	go 'build -o ./google-cloud-tasks-pull-to-push${GOEXE} ' +
+			'--ldflags "-extldflags -static -w" ' +
+			'github.com/tclift/google-cloud-tasks-pull-to-push'
 }
