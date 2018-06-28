@@ -1,0 +1,26 @@
+plugins {
+	id 'com.github.blindpirate.gogradle' version '0.9.3'
+}
+
+golang {
+	packagePath = 'github.com/tclift/google-cloud-tasks-pull-to-push'
+	buildMode = 'REPRODUCIBLE'
+}
+
+build {
+	targetPlatform = [ findProperty('targetPlatform') ?: 'linux-amd64' ]
+	environment 'CGO_ENABLED', '0'
+	go 'build -o ./google-cloud-tasks-pull-to-push${GOEXE} ' +
+			'--ldflags "-extldflags -static -w" ' +
+			'github.com/tclift/google-cloud-tasks-pull-to-push'
+}
+
+dependencies {
+	golang {
+		build 'cloud.google.com/go/cloudtasks/apiv2beta2'
+		build 'github.com/golang/protobuf/ptypes/duration'
+		build 'github.com/golang/protobuf/ptypes/timestamp'
+	 	build 'github.com/spf13/cobra'
+		build 'google.golang.org/genproto/googleapis/cloud/tasks/v2beta2'
+	}
+}
