@@ -10,3 +10,11 @@ allow the use of Cloud Tasks to target arbitrary URLs. A 'queue pump'. This is d
  * This tool sends the HTTP request to the target URL.
  * As per App Engine Push queue semantics, a 2xx response to the HTTP request results in task completion, and anything
    else (including request failure) results in the task staying in the queue for later retry.
+
+
+## Building
+
+### Binary
+
+    ./gradlew build
+

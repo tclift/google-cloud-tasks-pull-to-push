@@ -1,0 +1,7 @@
+plugins {
+	id 'com.github.blindpirate.gogradle' version '0.9.3'
+}
+
+golang {
+	packagePath = 'github.com/tclift/google-cloud-tasks-pull-to-push'
+}

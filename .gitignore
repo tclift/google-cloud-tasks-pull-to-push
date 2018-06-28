@@ -1,2 +1,6 @@
+/.gogradle/
+/.gradle/
 /.idea/
+/vendor/
+/google-cloud-tasks-pull-to-push
 /*.iml
