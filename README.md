@@ -12,6 +12,17 @@ allow the use of Cloud Tasks to target arbitrary URLs. A 'queue pump'. This is d
    else (including request failure) results in the task staying in the queue for later retry.
 
 
+## Usage
+
+The only required option is `project` (GCP project id):
+
+    google-cloud-tasks-pull-to-push --project my-project
+
+See the command help for a description of the available options.
+
+    google-cloud-tasks-pull-to-push --help
+
+
 ## Building
 
 ### Binary
