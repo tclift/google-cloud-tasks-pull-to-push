@@ -16,5 +16,11 @@ allow the use of Cloud Tasks to target arbitrary URLs. A 'queue pump'. This is d
 
 ### Binary
 
+To build a Linux AMD64 static binary:
+
     ./gradlew build
+
+Or, for a specific platform, e.g. macOS:
+
+    ./gradlew build -PtargetPlatform=darwin-amd64
 
