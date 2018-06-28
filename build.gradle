@@ -13,3 +13,13 @@ build {
 			'--ldflags "-extldflags -static -w" ' +
 			'github.com/tclift/google-cloud-tasks-pull-to-push'
 }
+
+dependencies {
+	golang {
+		build 'cloud.google.com/go/cloudtasks/apiv2beta2'
+		build 'github.com/golang/protobuf/ptypes/duration'
+		build 'github.com/golang/protobuf/ptypes/timestamp'
+	 	build 'github.com/spf13/cobra'
+		build 'google.golang.org/genproto/googleapis/cloud/tasks/v2beta2'
+	}
+}
