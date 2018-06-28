@@ -37,6 +37,32 @@ The backoff parameters are modelled on the App Engine queue settings. See
 [the docs there](https://cloud.google.com/appengine/docs/standard/go/taskqueue/push/retrying-tasks) for more detail.
 
 
+## GCP Authentication
+
+When using
+[Application Default Credentials](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application),
+no additional options are required.
+
+When running in the Docker image locally on a system with `gcloud`, the ADC can be mounted into the image like:
+
+    gcloud auth application-default login
+
+    docker run --rm -it \
+      -v ~/.config/gcloud:/.config/gcloud \
+      google-cloud-tasks-pull-to-push \
+      --project my-project
+
+Alternatively, [create a new service account](https://cloud.google.com/docs/authentication/getting-started) with the
+*Cloud Tasks Enqueuer* and *Cloud Tasks Dequeuer* roles. Point to the JSON credentials file using the
+`GOOGLE_APPLICATION_CREDENTIALS` environment variable. E.g.:
+
+    docker run --rm -it \
+      -v $(pwd)/credentials.json:/app/credentials.json \
+      -e "GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json" \
+      google-cloud-tasks-pull-to-push \
+      --project my-project
+
+
 
 ## Building
 
