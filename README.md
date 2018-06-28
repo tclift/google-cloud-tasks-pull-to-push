@@ -76,3 +76,8 @@ Or, for a specific platform, e.g. macOS:
 
     ./gradlew build -PtargetPlatform=darwin-amd64
 
+### Docker image
+
+The image contains this tool's binary and a root cert store (for making HTTPS requests).
+
+    docker build -t google-cloud-tasks-pull-to-push .
