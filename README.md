@@ -11,6 +11,15 @@ allow the use of Cloud Tasks to target arbitrary URLs. A 'queue pump'. This is d
  * As per App Engine Push queue semantics, a 2xx response to the HTTP request results in task completion, and anything
    else (including request failure) results in the task staying in the queue for later retry.
 
+**TAKE NOTE**
+
+App Engine Push queue HTTP requests arrive with project admin authentication. This allows requests and future retries to
+be 'indefinitely authenticated'. There is no such mechanic here. E.g. if you add a task with an Authorization header
+that contains a token valid for one hour, and that task fails to complete within an hour for whatever reason, that task
+will now permanently fail to authenticate, and is effectively stuck in the queue (requires manual deletion).
+
+Be sure to monitor your task queue and logs.
+
 
 ## Usage
 
