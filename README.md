@@ -22,6 +22,21 @@ See the command help for a description of the available options.
 
     google-cloud-tasks-pull-to-push --help
 
+### Queue Backoff
+
+There are two sets of queue backoff settings - one for the pull queue, and one for push (making the HTTP requests).
+
+The pull backoff settings apply when there are no tasks in the queue. This is to prevent polling too often during
+periods of inactivity, but more backoff means more latency handling tasks.
+
+The push backoff settings apply to failed HTTP requests (non-2xx response). This is to prevent wasting resources trying
+the same task when it continually fails. Note that failing tasks are never deleted by this utility; they will continue
+retrying at the max push backoff rate.
+
+The backoff parameters are modelled on the App Engine queue settings. See
+[the docs there](https://cloud.google.com/appengine/docs/standard/go/taskqueue/push/retrying-tasks) for more detail.
+
+
 
 ## Building
 
