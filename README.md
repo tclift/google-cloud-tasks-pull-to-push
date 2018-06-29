@@ -21,6 +21,23 @@ will now permanently fail to authenticate, and is effectively stuck in the queue
 Be sure to monitor your task queue and logs.
 
 
+## Installation
+
+### Helm
+
+There is a chart to install the Docker Hub image and map CLI args to Helm values. See the `helm` directory.
+
+### Docker
+
+There is an image on Docker Hub called `tclift/google-cloud-tasks-pull-to-push`. A minimal run is:
+
+    docker run tclift/google-cloud-tasks-pull-to-push --project my-project
+
+### Binary only
+
+See [Building→Binary](#building-binary).
+
+
 ## Usage
 
 The only required option is `project` (GCP project id):
@@ -31,22 +48,7 @@ See the command help for a description of the available options.
 
     google-cloud-tasks-pull-to-push --help
 
-### Queue Backoff
-
-There are two sets of queue backoff settings - one for the pull queue, and one for push (making the HTTP requests).
-
-The pull backoff settings apply when there are no tasks in the queue. This is to prevent polling too often during
-periods of inactivity, but more backoff means more latency handling tasks.
-
-The push backoff settings apply to failed HTTP requests (non-2xx response). This is to prevent wasting resources trying
-the same task when it continually fails. Note that failing tasks are never deleted by this utility; they will continue
-retrying at the max push backoff rate.
-
-The backoff parameters are modelled on the App Engine queue settings. See
-[the docs there](https://cloud.google.com/appengine/docs/standard/go/taskqueue/push/retrying-tasks) for more detail.
-
-
-## GCP Authentication
+### GCP Authentication
 
 When using
 [Application Default Credentials](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application),
@@ -71,15 +73,25 @@ Alternatively, [create a new service account](https://cloud.google.com/docs/auth
       google-cloud-tasks-pull-to-push \
       --project my-project
 
+### Queue Backoff
 
-## Helm / Kubernetes
+There are two sets of queue backoff settings - one for the pull queue, and one for push (making the HTTP requests).
 
-There is a chart to help map CLI args to Helm values. See the `helm` directory.
+The pull backoff settings apply when there are no tasks in the queue. This is to prevent polling too often during
+periods of inactivity, but more backoff means more latency handling tasks.
+
+The push backoff settings apply to failed HTTP requests (non-2xx response). This is to prevent wasting resources trying
+the same task when it continually fails. Note that failing tasks are never deleted by this utility; they will continue
+retrying at the max push backoff rate.
+
+The backoff parameters are modelled on the App Engine queue settings. See
+[the docs there](https://cloud.google.com/appengine/docs/standard/go/taskqueue/push/retrying-tasks) for more detail.
 
 
 ## Building
 
 ### Binary
+<a id="building-binary"></a>
 
 To build a Linux AMD64 static binary:
 
