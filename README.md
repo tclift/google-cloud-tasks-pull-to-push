@@ -60,7 +60,7 @@ When running in the Docker image locally on a system with `gcloud`, the ADC can 
 
     docker run --rm -it \
       -v ~/.config/gcloud:/.config/gcloud \
-      google-cloud-tasks-pull-to-push \
+      tclift/google-cloud-tasks-pull-to-push \
       --project my-project
 
 Alternatively, [create a new service account](https://cloud.google.com/docs/authentication/getting-started) with the
@@ -70,7 +70,7 @@ Alternatively, [create a new service account](https://cloud.google.com/docs/auth
     docker run --rm -it \
       -v $(pwd)/credentials.json:/app/credentials.json \
       -e "GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json" \
-      google-cloud-tasks-pull-to-push \
+      tclift/google-cloud-tasks-pull-to-push \
       --project my-project
 
 ### Queue Backoff
