@@ -35,18 +35,64 @@ There is an image on Docker Hub called `tclift/google-cloud-tasks-pull-to-push`.
 
 ### Binary only
 
-See [Building→Binary](#building-binary).
+See [Building→Binary](#binary).
 
 
 ## Usage
 
-The only required option is `project` (GCP project id):
+### Local Test Example
 
-    google-cloud-tasks-pull-to-push --project my-project
+ 1. Create a push queue called `pull-to-push`. Use `queue.yaml` / `queue.xml` if you use it, or:
 
-See the command help for a description of the available options.
+        gcloud alpha tasks queues create-pull-queue pull-to-push
 
-    google-cloud-tasks-pull-to-push --help
+ 2. Enqueue a test task (see [Pull Queue Task Format](#pull-queue-task-format) for format details):
+
+        gcloud alpha tasks create-pull-task \
+          --queue=pull-to-push \
+          --payload-content="{\
+            \"method\":\"POST\",\
+            \"absUrl\":\"http://localhost:8000/\",\
+            \"headers\":{\"Content-Type\":\"application/json\"},\
+            \"payload\":\"{\\\"foo\\\": \\\"bar\\\"}\"\
+            }"
+
+ 3. Run a local web server to receive the request. E.g. using
+    [local-web-server](https://github.com/lwsjs/local-web-server):
+
+        ws
+
+ 4. Run the tool. The only required option is `project` (GCP project id):
+
+        google-cloud-tasks-pull-to-push --project my-project
+
+ 5. Output from the tool should show processing of a task, and the web server should show receipt of the request. If the
+    tool indicates failure to connect to the pull queue due to permissions, see
+    [GCP Authentication](#gcp-authentication).
+
+### Pull Queue Task Format
+
+This is the content of the 'outer' pull task. The wrapped push task is encoded in the `payload` value.
+
+| Key     | Type   | Purpose                                       |
+|---------|--------|-----------------------------------------------|
+| method  | string | HTTP method, uppercase.                       |
+| absUrl  | string | Absolute URL for push task endpoint.          |
+| headers | Object | Headers to include in the request, e.g. auth. |
+| payload | string | Request body of the push task.                |
+
+E.g.:
+
+```json
+{
+  "method": "POST",
+  "absUrl": "https://example.org/endpoint",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "payload": "{\"foo\": \"bar\"}"
+}
+```
 
 ### GCP Authentication
 
@@ -87,11 +133,16 @@ retrying at the max push backoff rate.
 The backoff parameters are modelled on the App Engine queue settings. See
 [the docs there](https://cloud.google.com/appengine/docs/standard/go/taskqueue/push/retrying-tasks) for more detail.
 
+### Other Options
+
+See the command help
+
+    google-cloud-tasks-pull-to-push --help
+
 
 ## Building
 
 ### Binary
-<a id="building-binary"></a>
 
 To build a Linux AMD64 static binary:
 
